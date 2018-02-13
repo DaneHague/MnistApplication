@@ -11,6 +11,16 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
+app.use('/testpage', function(){
+  var PythonShell = require('python-shell'); 
+  var pyshell = new PythonShell('C:/Users/daneh/MnistApplication/server/vanilla_nn.py');
+
+pyshell.on('message', function (message) { 
+  // received a message sent from the Python script (a simple "print" statement)  
+  console.log(message); 
+});
+})
+
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
