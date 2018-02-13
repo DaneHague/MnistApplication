@@ -16,7 +16,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectMnistPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { saveParameters } from './actions';
+import { sendMnistParamsToApi } from './actions';
 
 export class MnistPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -27,7 +27,7 @@ export class MnistPage extends React.Component { // eslint-disable-line react/pr
 }
 
 MnistPage.propTypes = {
-  saveParameters: PropTypes.func.isRequired,
+  sendMnistParamsToApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -36,7 +36,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    saveParameters: (params) => dispatch(saveParameters(params)),
+    sendMnistParamsToApi: (params) => dispatch(sendMnistParamsToApi(params)),
   };
 }
 

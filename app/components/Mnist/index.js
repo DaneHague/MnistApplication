@@ -42,13 +42,14 @@ const styles = theme => ({
 
 
 function prev(e) {
+  var socket = io.connect('http://localhost:3000');
   e.preventDefault();
 }
 
 class Mnist extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   saveParams = () => {
-    this.props.saveParameters(
+    this.props.sendMnistParamsToApi(
       {
         name: this.state.nameVal,
         number: this.state.numVal,
@@ -57,6 +58,8 @@ class Mnist extends React.Component { // eslint-disable-line react/prefer-statel
       }
     );
   }
+
+  
 
   updateStateVal = (evt, id) => {
     this.setState({
@@ -75,7 +78,7 @@ class Mnist extends React.Component { // eslint-disable-line react/prefer-statel
           <Typography component="p">
             Please specify the parameters that you want to use. Note: all parmaters must be chosen.
           </Typography>
-          <form onSubmit={prev}>
+          <form method="post" action="/MnistPages" onSubmit={prev}>
             <Grid item xs={12}>
               <Tooltip title="This is where you add the name">
                 <TextField label="Name" onChange={evt => this.updateStateVal(evt, "nameVal")} className={this.props.classes.textField}></TextField>
@@ -87,7 +90,7 @@ class Mnist extends React.Component { // eslint-disable-line react/prefer-statel
               <TextField label="Param4" onChange={evt => this.updateStateVal(evt, "param4")} className={this.props.classes.textField}></TextField>
             </Grid>
             <Grid item xs={12}  className={this.props.classes.alignSubmitButton}>
-              <Button raised color="primary" type="submit" onClick={this.saveParams} className={this.props.classes.submitButton}>
+              <Button color="primary" type="submit" onClick={this.saveParams} className={this.props.classes.submitButton}>
                 Submit
               </Button>
             </Grid>
@@ -99,8 +102,8 @@ class Mnist extends React.Component { // eslint-disable-line react/prefer-statel
 }
 
 Mnist.propTypes = {
-  saveParameters: React.PropTypes.func.isRequired,
   classes: React.PropTypes.object.isRequired,
+  sendMnistParamsToApi: React.PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Mnist);

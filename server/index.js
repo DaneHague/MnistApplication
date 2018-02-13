@@ -10,16 +10,16 @@ const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
+const socket = require('socket.io');
 
-app.use('/testpage', function(){
-  var PythonShell = require('python-shell'); 
-  var pyshell = new PythonShell('C:/Users/daneh/MnistApplication/server/vanilla_nn.py');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}));
 
-pyshell.on('message', function (message) { 
-  // received a message sent from the Python script (a simple "print" statement)  
-  console.log(message); 
+app.post('/MnistPages', function (req, res) {
+  var nme = req.body.Name;
+  console.log(nme);
 });
-})
 
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
@@ -37,7 +37,7 @@ const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
 // Start your app.
-app.listen(port, host, (err) => {
+const server = app.listen(port, host, (err) => {
   if (err) {
     return logger.error(err.message);
   }
@@ -54,6 +54,19 @@ app.listen(port, host, (err) => {
   } else {
     logger.appStarted(port, prettyHost);
   }
+});
+
+const io = socket(server);
+
+io.on('connection', function(socket){
+  var PythonShell = require('python-shell'); 
+  var pyshell = new PythonShell('C:/Users/daneh/MnistApplication/server/vanilla_nn.py');
+
+  pyshell.on('message', function (message) { 
+    // received a message sent from the Python script (a simple "print" statement)  
+    console.log(message);
+    pyshell.end();
+  });
 });
 
 
