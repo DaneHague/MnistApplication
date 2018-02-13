@@ -5,8 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import {
-  SAVE_PARAMETERS,
+import { SEND_MNIST_PARAMS_TO_API,
 } from './constants';
 
 const initialState = fromJS({
@@ -14,8 +13,8 @@ const initialState = fromJS({
 
 function mnistPageReducer(state = initialState, action) {
   switch (action.type) {
-    case SAVE_PARAMETERS:
-      return state.set('Parameters', action.params)
+    case SEND_MNIST_PARAMS_TO_API:
+      return state.set('sentToApi?', action.params)
     default:
       return state;
   }

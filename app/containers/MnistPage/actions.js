@@ -5,12 +5,12 @@
  */
 
 import {
-  SAVE_PARAMETERS,
+  SEND_MNIST_PARAMS_TO_API,
 } from './constants';
 
-export function saveParameters(params) {
+export function sendMnistParamsToApi(params) {
   return {
-    type: SAVE_PARAMETERS,
+    type: SEND_MNIST_PARAMS_TO_API,
     params,
   };
 }
