@@ -59,7 +59,6 @@ const server = app.listen(port, host, (err) => {
 const io = socket(server);
 
 io.on('connection', function(socket){
-<<<<<<< HEAD
 
   socket.on('Mnist Parameters', function(msg) {
     console.log(msg);
@@ -78,15 +77,6 @@ io.on('connection', function(socket){
       pyshell.end();
     });
 
-=======
-  var PythonShell = require('python-shell'); 
-  var pyshell = new PythonShell('C:/Users/daneh/MnistApplication/server/vanilla_nn.py');
-
-  pyshell.on('message', function (message) { 
-    // received a message sent from the Python script (a simple "print" statement)  
-    console.log(message);
-    pyshell.end();
->>>>>>> 69c77d7a6dbf8800d8b71dfc41adaf0fbe3b64a1
   });
 });
 
