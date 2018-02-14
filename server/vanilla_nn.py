@@ -1,6 +1,7 @@
 # Import dependancies
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+import sys
 
 import os
 
@@ -10,11 +11,11 @@ mnist = input_data.read_data_sets("/tmp/data/", one_hot = True)
 
 # The batch size takes n samples of data to run through the network 
 # The model then will be trained on this batch and improve accuracy
-# Also when using larger data sets you have to split them up
-batch_size = 128
+# Also when using larger data sets you have to split them up -- 128
+batch_size = int(sys.argv[2])
 
-# How many times do we want to train the network
-hm_epochs = 5
+# How many times do we want to train the network -- 5
+hm_epochs = int(sys.argv[1])
 
 # These are the entry points to the graph, x is the input, in this case images. Y is the labels
 x = tf.placeholder('float', [None, 784])
@@ -29,13 +30,13 @@ keep_prob_hl2 = tf.placeholder(tf.float32)
 
 def neural_network_model(data):
 
-	# Hidden layer 1
-	h1 = tf.layers.dense(inputs=x, units=200, activation=tf.nn.relu, kernel_initializer=init)
+	# Hidden layer 1 -- 200
+	h1 = tf.layers.dense(inputs=x, units=int(sys.argv[3]), activation=tf.nn.relu, kernel_initializer=init)
 
 	h_fc1_drop = tf.nn.dropout(h1, keep_prob_hl1)
 
-	# Hidden layer 2
-	h2 = tf.layers.dense(inputs=h_fc1_drop, units=500, activation=tf.nn.relu)
+	# Hidden layer 2 -- 500
+	h2 = tf.layers.dense(inputs=h_fc1_drop, units=int(sys.argv[4]), activation=tf.nn.relu)
 
 	h2_fc2_drop = tf.nn.dropout(h2, keep_prob_hl2)
 

@@ -42,19 +42,20 @@ const styles = theme => ({
 
 
 function prev(e) {
-  var socket = io.connect('http://localhost:3000');
   e.preventDefault();
 }
 
 class Mnist extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   saveParams = () => {
+    var socket = io.connect('http://localhost:3000');
+    socket.emit('Mnist Parameters', this.state);
     this.props.sendMnistParamsToApi(
       {
-        name: this.state.nameVal,
-        number: this.state.numVal,
-        param3: this.state.param3,
-        param4: this.state.param4,
+        epochs: this.state.epochs,
+        batchSize: this.state.batchSize,
+        l1Neurons: this.state.l1Neurons,
+        l2Neurons: this.state.l2Neurons,
       }
     );
   }
@@ -81,13 +82,13 @@ class Mnist extends React.Component { // eslint-disable-line react/prefer-statel
           <form method="post" action="/MnistPages" onSubmit={prev}>
             <Grid item xs={12}>
               <Tooltip title="This is where you add the name">
-                <TextField label="Name" onChange={evt => this.updateStateVal(evt, "nameVal")} className={this.props.classes.textField}></TextField>
+                <TextField label="Epochs" onChange={evt => this.updateStateVal(evt, "epochs")} className={this.props.classes.textField}></TextField>
               </Tooltip>
-              <TextField label="Number" onChange={evt => this.updateStateVal(evt, "numVal")} className={this.props.classes.textField}></TextField>
+              <TextField label="Batch Size" onChange={evt => this.updateStateVal(evt, "batchSize")} className={this.props.classes.textField}></TextField>
             </Grid>
             <Grid item xs={12}>
-              <TextField label="Param3" onChange={evt => this.updateStateVal(evt, "param3")} className={this.props.classes.textField}></TextField>
-              <TextField label="Param4" onChange={evt => this.updateStateVal(evt, "param4")} className={this.props.classes.textField}></TextField>
+              <TextField label="Layer1 Neurons" onChange={evt => this.updateStateVal(evt, "l1Neurons")} className={this.props.classes.textField}></TextField>
+              <TextField label="Layer2 Neurons" onChange={evt => this.updateStateVal(evt, "l2Neurons")} className={this.props.classes.textField}></TextField>
             </Grid>
             <Grid item xs={12}  className={this.props.classes.alignSubmitButton}>
               <Button color="primary" type="submit" onClick={this.saveParams} className={this.props.classes.submitButton}>
