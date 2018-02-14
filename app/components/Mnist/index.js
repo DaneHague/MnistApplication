@@ -42,14 +42,18 @@ const styles = theme => ({
 
 
 function prev(e) {
+  var socket = io.connect('http://localhost:3000');
   e.preventDefault();
 }
 
 class Mnist extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   saveParams = () => {
+<<<<<<< HEAD
     var socket = io.connect('http://localhost:3000');
     socket.emit('Mnist Parameters', this.state);
+=======
+>>>>>>> 69c77d7a6dbf8800d8b71dfc41adaf0fbe3b64a1
     this.props.sendMnistParamsToApi(
       {
         epochs: this.state.epochs,
